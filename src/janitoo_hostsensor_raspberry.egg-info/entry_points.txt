@@ -1,0 +1,3 @@
+[janitoo.components]
+hostsensor.picpu = janitoo_hostsensor_raspberry.component:make_picpu
+

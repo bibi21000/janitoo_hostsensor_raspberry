@@ -31,6 +31,7 @@ import logging
 from pkg_resources import iter_entry_points
 
 from janitoo_nosetests.component import JNTTComponent, JNTTComponentCommon
+from janitoo_nosetests.server import JNTTServer, JNTTServerCommon
 
 from janitoo.utils import json_dumps, json_loads
 from janitoo.utils import HADD_SEP, HADD
@@ -39,6 +40,7 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 
+JNTTServer.skipRasperryTest()
 
 ##############################################################
 #Check that we are in sync with the official command classes

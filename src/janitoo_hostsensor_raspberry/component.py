@@ -30,10 +30,11 @@ __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
-logger = logging.getLogger( __name__ )
+logger = logging.getLogger( "janitoo.hostsensor" )
 
 import os, sys
 import threading
+import re
 from pkg_resources import get_distribution, DistributionNotFound
 from janitoo.thread import JNTBusThread
 from janitoo.options import get_option_autostart
@@ -65,6 +66,8 @@ class HardwareCpu(JNTComponent):
     """
     def __init__(self, bus=None, addr=None, **kwargs):
         JNTComponent.__init__(self, 'hostsensor.picpu', bus=bus, addr=addr, name="Raspberry pi CPU", **kwargs)
+
+	self.re_nondecimal = re.compile(r'[^\d.]+')
 
         uuid="temperature"
         self.values[uuid] = self.value_factory['sensor_temperature'](options=self.options, uuid=uuid,
@@ -100,7 +103,7 @@ class HardwareCpu(JNTComponent):
         res = os.popen('vcgencmd measure_temp').readline()
         ret = None
         try:
-            ret = float(res.replace("temp=","").replace("°C\n",""))
+            ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
             logger.exception('Exception when retrieving CPU temperature')
             ret = None
@@ -120,7 +123,7 @@ class HardwareCpu(JNTComponent):
         res = os.popen('vcgencmd measure_volts core').readline()
         ret = None
         try:
-            ret = float(res.replace("volt=","").replace("V\n",""))
+            ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
             logger.exception('Exception when retrieving CPU voltage')
             ret = None

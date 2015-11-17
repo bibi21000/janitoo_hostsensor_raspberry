@@ -67,7 +67,7 @@ class HardwareCpu(JNTComponent):
     def __init__(self, bus=None, addr=None, **kwargs):
         JNTComponent.__init__(self, 'hostsensor.picpu', bus=bus, addr=addr, name="Raspberry pi CPU", **kwargs)
 
-    self.re_nondecimal = re.compile(r'[^\d.]+')
+        self.re_nondecimal = re.compile(r'[^\d.]+')
 
         uuid="temperature"
         self.values[uuid] = self.value_factory['sensor_temperature'](options=self.options, uuid=uuid,

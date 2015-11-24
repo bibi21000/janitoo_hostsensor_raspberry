@@ -1,3 +1,7 @@
+.. image:: https://travis-ci.org/bibi21000/janitoo_hostsensor_raspberry.svg?branch=master
+    :target: https://travis-ci.org/bibi21000/janitoo_hostsensor_raspberry
+    :alt: Travis test status
+
 ===============
 The README file
 ===============

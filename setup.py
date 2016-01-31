@@ -87,16 +87,18 @@ setup(
     url='http://bibi21000.gallet.info/',
     version = janitoo_version,
     zip_safe = False,
-    keywords = "hostsensor",
+    keywords = "hostsensor, raspberry",
     packages = find_packages('src', exclude=["scripts", "docs", "config"]),
     package_dir = { '': 'src' },
     include_package_data=True,
     data_files = data_files,
     install_requires=[
+                     'janitoo',
                      'janitoo_hostsensor >= %s'%'0.0.6',
                     ],
     dependency_links = [
       'https://github.com/bibi21000/janitoo_hostsensor/archive/master.zip#egg=janitoo_hostsensor-%s'%"0.0.7",
+      'https://github.com/bibi21000/janitoo/archive/master.zip#egg=janitoo',
     ],
     entry_points = janitoo_entry_points,
 )

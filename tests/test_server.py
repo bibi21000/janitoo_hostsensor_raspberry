@@ -86,7 +86,6 @@ class TestHostSensorSerser(JNTTServer, JNTTServerCommon):
             self.stop()
 
     def test_112_request_nodes_and_values(self):
-571
         self.start()
         try:
             self.assertHeartbeatNode()

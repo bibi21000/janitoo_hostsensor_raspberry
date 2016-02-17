@@ -66,8 +66,7 @@ class TestHostSensorSerser(JNTTServer, JNTTServerCommon):
     def test_101_wait_for_all_nodes(self):
         self.start()
         try:
-            self.assertHeartbeatNode(hadd=HADD%(1048,0))
-            self.assertHeartbeatNode(hadd=HADD%(1048,6))
+            self.assertHeartbeatNodes(hadds=[HADD%(1048,0), HADD%(1048,6)])
             #~ self.assertHeartbeatNode(hadd=HADD%(1048,2))
             #~ self.assertHeartbeatNode(hadd=HADD%(1048,3))
             #~ self.assertHeartbeatNode(hadd=HADD%(1048,4))

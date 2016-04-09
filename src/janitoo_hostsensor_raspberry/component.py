@@ -100,31 +100,28 @@ class HardwareCpu(JNTComponent):
         self.values[poll_value.uuid] = poll_value
 
     def cpu_temperature(self, node_uuid, index):
-        res = os.popen('vcgencmd measure_temp').readline()
-        ret = None
         try:
+            res = os.popen('vcgencmd measure_temp').readline()
             ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
-            logger.exception('Exception when retrieving CPU temperature')
+            logger.exception('[%s] - Exception when retrieving CPU temperature', self.__class__.__name__)
             ret = None
         return ret
 
     def cpu_frequency(self, node_uuid, index):
-        res = os.popen('vcgencmd measure_clock arm').readline()
-        ret = None
         try:
+            res = os.popen('vcgencmd measure_clock arm').readline()
             ret = int(res.replace("frequency(45)=",""))/1000000
         except ValueError:
-            logger.exception('Exception when retrieving CPU frequency')
+            logger.exception('[%s] - Exception when retrieving CPU frequency', self.__class__.__name__)
             ret = None
         return ret
 
     def cpu_volt(self, node_uuid, index):
-        res = os.popen('vcgencmd measure_volts core').readline()
-        ret = None
         try:
+            res = os.popen('vcgencmd measure_volts core').readline()
             ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
-            logger.exception('Exception when retrieving CPU voltage')
+            logger.exception('[%s] - Exception when retrieving CPU voltage', self.__class__.__name__)
             ret = None
         return ret

@@ -65,7 +65,9 @@ class HardwareCpu(JNTComponent):
     as well as methods to command the robot
     """
     def __init__(self, bus=None, addr=None, **kwargs):
-        JNTComponent.__init__(self, 'hostsensor.picpu', bus=bus, addr=addr, name="Raspberry pi CPU", **kwargs)
+        oid = kwargs.pop('oid', 'hostsensor.picpu')
+        name = kwargs.pop('name', "Raspberry pi CPU")
+        JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name, **kwargs)
 
         self.re_nondecimal = re.compile(r'[^\d.]+')
 

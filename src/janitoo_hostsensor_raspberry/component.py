@@ -35,6 +35,7 @@ import os, sys
 import threading
 import re
 from pkg_resources import get_distribution, DistributionNotFound
+import subprocess
 
 from janitoo.thread import JNTBusThread
 from janitoo.options import get_option_autostart
@@ -102,27 +103,54 @@ class HardwareCpu(JNTComponent):
         self.values[poll_value.uuid] = poll_value
 
     def cpu_temperature(self, node_uuid, index):
+        ret = None
         try:
-            res = os.popen('vcgencmd measure_temp').readline()
-            ret = float(self.re_nondecimal.sub('', res))
+            cmd = 'vcgencmd measure_temp'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = process.communicate()
+            stdout = [x for x in stdout.split("\n") if x != ""]
+            stderr = [x for x in stderr.split("\n") if x != ""]
+            if process.returncode < 0 or len(stderr):
+                for error in stderr:
+                    logger.error(error)
+            else:
+                ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU temperature', self.__class__.__name__)
             ret = None
         return ret
 
     def cpu_frequency(self, node_uuid, index):
+        ret = None
         try:
-            res = os.popen('vcgencmd measure_clock arm').readline()
-            ret = int(res.replace("frequency(45)=",""))/1000000
+            cmd = 'vcgencmd measure_clock arm'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = process.communicate()
+            stdout = [x for x in stdout.split("\n") if x != ""]
+            stderr = [x for x in stderr.split("\n") if x != ""]
+            if process.returncode < 0 or len(stderr):
+                for error in stderr:
+                    logger.error(error)
+            else:
+                ret = int(res.replace("frequency(45)=",""))/1000000
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU frequency', self.__class__.__name__)
             ret = None
         return ret
 
     def cpu_volt(self, node_uuid, index):
+        ret = None
         try:
-            res = os.popen('vcgencmd measure_volts core').readline()
-            ret = float(self.re_nondecimal.sub('', res))
+            cmd = 'vcgencmd measure_volts core'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = process.communicate()
+            stdout = [x for x in stdout.split("\n") if x != ""]
+            stderr = [x for x in stderr.split("\n") if x != ""]
+            if process.returncode < 0 or len(stderr):
+                for error in stderr:
+                    logger.error(error)
+            else:
+                ret = float(self.re_nondecimal.sub('', res))
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU voltage', self.__class__.__name__)
             ret = None

@@ -60,3 +60,14 @@ class TestComponentPiCPU(JNTTComponent, JNTTComponentCommon):
     """Test the component
     """
     component_name = "hostsensor.picpu"
+
+    def test_101_read_values(self):
+        self.onlyRasperryTest()
+        comp = self.factory[self.component_name]()
+        self.assertNotEqual(comp, None)
+        temperature = comp.cpu_temperature(None, None)
+        self.assertEqual(type(temperature), type(0.0))
+        frequency = comp.cpu_frequency(None, None)
+        self.assertEqual(type(frequency), type(0))
+        voltage = comp.cpu_volt(None, None)
+        self.assertEqual(type(voltage), type(0.0))

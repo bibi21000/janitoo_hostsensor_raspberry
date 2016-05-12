@@ -114,7 +114,7 @@ class HardwareCpu(JNTComponent):
                 for error in stderr:
                     logger.error(error)
             else:
-                ret = float(self.re_nondecimal.sub('', res))
+                ret = float(self.re_nondecimal.sub('', stdout[0]))
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU temperature', self.__class__.__name__)
             ret = None
@@ -132,7 +132,7 @@ class HardwareCpu(JNTComponent):
                 for error in stderr:
                     logger.error(error)
             else:
-                ret = int(res.replace("frequency(45)=",""))/1000000
+                ret = int(stdout[0].replace("frequency(45)=",""))/1000000
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU frequency', self.__class__.__name__)
             ret = None
@@ -150,7 +150,7 @@ class HardwareCpu(JNTComponent):
                 for error in stderr:
                     logger.error(error)
             else:
-                ret = float(self.re_nondecimal.sub('', res))
+                ret = float(self.re_nondecimal.sub('', stdout[0]))
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU voltage', self.__class__.__name__)
             ret = None

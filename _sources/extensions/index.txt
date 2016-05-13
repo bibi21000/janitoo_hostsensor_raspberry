@@ -1,0 +1,13 @@
+janitoo_hostsensor_raspberry package
+====================================
+
+Show janitoo's extensions.
+
+Core extensions
+---------------
+
+Components
+^^^^^^^^^^
+
+ - hostsensor.picpu (janitoo_hostsensor_raspberry.component:make_picpu)
+

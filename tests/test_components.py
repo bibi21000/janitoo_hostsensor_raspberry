@@ -66,18 +66,18 @@ class TestComponentPiCPU(JNTTComponent, JNTTComponentCommon):
         component = self.factory[self.component_name]()
         print("Temperature : ", component.cpu_temperature(None, 0))
         self.assertNotEqual(component.cpu_temperature(None, 0), None)
-        self.assertEqual(type(temperature), type(0.0))
+        self.assertEqual(type(component.cpu_temperature(None, 0)), type(0.0))
 
     def test_110_hardware_cpu_frequency(self):
         self.onlyRasperryTest()
         component = self.factory[self.component_name]()
         print("Frequency : ", component.cpu_frequency(None, 0))
         self.assertNotEqual(component.cpu_frequency(None, 0), None)
-        self.assertEqual(type(frequency), type(0))
+        self.assertEqual(type(component.cpu_frequency(None, 0)), type(0))
 
     def test_120_hardware_cpu_volt(self):
         self.onlyRasperryTest()
         component = self.factory[self.component_name]()
         print("Voltage : ", component.cpu_volt(None, 0))
         self.assertNotEqual(component.cpu_volt(None, 0), None)
-        self.assertEqual(type(voltage), type(0.0))
+        self.assertEqual(type(component.cpu_volt(None, 0)), type(0.0))

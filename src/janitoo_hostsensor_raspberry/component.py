@@ -79,7 +79,7 @@ class HardwareCpu(JNTComponent):
             label='CPUTemp',
             get_data_cb=self.cpu_temperature,
         )
-        poll_value = self.values[uuid].create_poll_value()
+        poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
 
         uuid="frequency"
@@ -89,7 +89,7 @@ class HardwareCpu(JNTComponent):
             label='CPUFreq',
             get_data_cb=self.cpu_frequency,
         )
-        poll_value = self.values[uuid].create_poll_value()
+        poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
 
         uuid="voltage"
@@ -99,7 +99,7 @@ class HardwareCpu(JNTComponent):
             label='CPUVolt',
             get_data_cb=self.cpu_volt,
         )
-        poll_value = self.values[uuid].create_poll_value()
+        poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
 
     def cpu_temperature(self, node_uuid, index):

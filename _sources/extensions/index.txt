@@ -1,13 +1,7 @@
-janitoo_hostsensor_raspberry package
-====================================
+Janitoo's extensions
+====================
 
-Show janitoo's extensions.
+This package contains the following extensions for Janitoo.
 
-Core extensions
----------------
-
-Components
-^^^^^^^^^^
-
- - hostsensor.picpu (janitoo_hostsensor_raspberry.component:make_picpu)
+.. jnt-extensions::
 

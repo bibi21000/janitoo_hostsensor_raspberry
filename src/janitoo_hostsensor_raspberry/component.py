@@ -57,6 +57,8 @@ assert(COMMAND_DESC[COMMAND_METER] == 'COMMAND_METER')
 assert(COMMAND_DESC[COMMAND_CONFIGURATION] == 'COMMAND_CONFIGURATION')
 ##############################################################
 
+from janitoo_hostsensor import OID
+
 def make_picpu(**kwargs):
     return HardwareCpu(**kwargs)
 
@@ -66,7 +68,7 @@ class HardwareCpu(JNTComponent):
     as well as methods to command the robot
     """
     def __init__(self, bus=None, addr=None, **kwargs):
-        oid = kwargs.pop('oid', 'hostsensor.picpu')
+        oid = kwargs.pop('oid', '%s.picpu'%OID)
         name = kwargs.pop('name', "Raspberry pi CPU")
         JNTComponent.__init__(self, oid=oid, bus=bus, addr=addr, name=name, **kwargs)
 

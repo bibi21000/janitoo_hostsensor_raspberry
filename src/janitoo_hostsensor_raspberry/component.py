@@ -37,6 +37,7 @@ import re
 from pkg_resources import get_distribution, DistributionNotFound
 import subprocess
 
+from janitoo.compat import str_to_native
 from janitoo.thread import JNTBusThread
 from janitoo.options import get_option_autostart
 from janitoo.utils import HADD
@@ -110,11 +111,11 @@ class HardwareCpu(JNTComponent):
             cmd = 'vcgencmd measure_temp'
             process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = process.communicate()
-            stdout = [x for x in stdout.split("\n") if x != ""]
-            stderr = [x for x in stderr.split("\n") if x != ""]
+            stdout = [x for x in stdout.split(str_to_native("\n")) if len(x) != 0]
+            stderr = [x for x in stderr.split(str_to_native("\n")) if len(x) != 0]
             if process.returncode < 0 or len(stderr):
                 for error in stderr:
-                    logger.error(error)
+                    logger.error('[%s] - Error when retrieving CPU temperature : %s', self.__class__.__name__, error)
             else:
                 ret = float(self.re_nondecimal.sub('', stdout[0]))
         except ValueError:
@@ -128,13 +129,13 @@ class HardwareCpu(JNTComponent):
             cmd = 'vcgencmd measure_clock arm'
             process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = process.communicate()
-            stdout = [x for x in stdout.split("\n") if x != ""]
-            stderr = [x for x in stderr.split("\n") if x != ""]
-            if process.returncode < 0 or len(stderr):
-                for error in stderr:
-                    logger.error(error)
+            sstdout = [x for x in stdout.split(str_to_native("\n")) if len(x) != 0]
+            sstderr = [x for x in stderr.split(str_to_native("\n")) if len(x) != 0]
+            if process.returncode < 0 or len(sstderr):
+                for error in sstderr:
+                    logger.error('[%s] - Error when retrieving CPU frequency : %s', self.__class__.__name__, error)
             else:
-                ret = int(stdout[0].replace("frequency(45)=",""))/1000000
+                ret = int(sstdout[0].replace("frequency(45)=",""))/1000000
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU frequency', self.__class__.__name__)
             ret = None
@@ -146,13 +147,13 @@ class HardwareCpu(JNTComponent):
             cmd = 'vcgencmd measure_volts core'
             process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = process.communicate()
-            stdout = [x for x in stdout.split("\n") if x != ""]
-            stderr = [x for x in stderr.split("\n") if x != ""]
-            if process.returncode < 0 or len(stderr):
-                for error in stderr:
-                    logger.error(error)
+            sstdout = [x for x in stdout.split(str_to_native("\n")) if len(x) != 0]
+            sstderr = [x for x in stderr.split(str_to_native("\n")) if len(x) != 0]
+            if process.returncode < 0 or len(sstderr):
+                for error in sstderr:
+                    logger.error('[%s] - Error when retrieving CPU voltage : %s', self.__class__.__name__, error)
             else:
-                ret = float(self.re_nondecimal.sub('', stdout[0]))
+                ret = float(self.re_nondecimal.sub('', sstdout[0]))
         except ValueError:
             logger.exception('[%s] - Exception when retrieving CPU voltage', self.__class__.__name__)
             ret = None

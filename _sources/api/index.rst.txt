@@ -1,0 +1,22 @@
+janitoo_hostsensor_raspberry package
+====================================
+
+Submodules
+----------
+
+janitoo_hostsensor_raspberry.component module
+---------------------------------------------
+
+.. automodule:: janitoo_hostsensor_raspberry.component
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: janitoo_hostsensor_raspberry
+    :members:
+    :undoc-members:
+    :show-inheritance:

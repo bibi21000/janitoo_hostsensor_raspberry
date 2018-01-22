@@ -31,20 +31,13 @@ __copyright__ = "Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi2100
 import logging
 logger = logging.getLogger(__name__)
 
-import os, sys
-import threading
+import os
 import re
-from pkg_resources import get_distribution, DistributionNotFound
+from pkg_resources import DistributionNotFound
 import subprocess
 
 from janitoo.compat import str_to_native
-from janitoo.thread import JNTBusThread
-from janitoo.options import get_option_autostart
-from janitoo.utils import HADD
-from janitoo.node import JNTNode
-from janitoo.bus import JNTBus
 from janitoo.component import JNTComponent
-from janitoo.value import JNTValue, value_config_poll
 
 ##############################################################
 #Check that we are in sync with the official command classes

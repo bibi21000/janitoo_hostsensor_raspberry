@@ -96,6 +96,44 @@ class HardwareCpu(JNTComponent):
         poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
 
+        uuid="cpu_governor"
+        self.values[uuid] = self.value_factory['action_string'](options=self.options, uuid=uuid,
+            node_uuid=self.uuid,
+            help='Change the cpu governor',
+            label='governor',
+            default='conservative',
+            set_data_cb=self.set_governor,
+        )
+        poll_value = self.values[uuid].create_poll_value(default=300)
+        self.values[poll_value.uuid] = poll_value
+
+    def kernel_modprobe(self, module, params=''):
+        """Load a kernel module. Needs to be root (raspberry)
+
+        :param str module: the kernel module to load
+        :param str params: module parameters
+        """
+
+    def set_governor(self, node_uuid, index, data):
+        """Dim a dimmer
+        """
+
+        try:
+            cmd = '/usr/bin/cpufreq-set -g %s' % (data)
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = process.communicate()
+            stdout = [x for x in stdout.split(str_to_native("\n")) if x != ""]
+            stderr = [x for x in stderr.split(str_to_native("\n")) if x != ""]
+            if process.returncode < 0 or len(stderr):
+                for error in stderr:
+                    logger.error(error)
+            else:
+                self._data = data
+                return True
+        except Exception:
+            logger.exception("Can't launch cpufreq-set command")
+
+
     def cpu_temperature(self, node_uuid, index):
         ret = None
         try:

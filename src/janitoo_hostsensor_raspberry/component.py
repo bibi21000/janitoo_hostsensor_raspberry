@@ -107,13 +107,6 @@ class HardwareCpu(JNTComponent):
         poll_value = self.values[uuid].create_poll_value(default=300)
         self.values[poll_value.uuid] = poll_value
 
-    def kernel_modprobe(self, module, params=''):
-        """Load a kernel module. Needs to be root (raspberry)
-
-        :param str module: the kernel module to load
-        :param str params: module parameters
-        """
-
     def set_governor(self, node_uuid, index, data):
         """Dim a dimmer
         """

@@ -81,3 +81,9 @@ class TestComponentPiCPU(JNTTComponent, JNTTComponentCommon):
         print("Voltage : ", component.cpu_volt(None, 0))
         self.assertNotEqual(component.cpu_volt(None, 0), None)
         self.assertEqual(type(component.cpu_volt(None, 0)), type(0.0))
+
+    def test_130_cpu_governor(self):
+        self.onlyRasperryTest()
+        component = self.factory[self.component_name]()
+        print("governor : ", component.set_governor(None, 0, 'conservative'))
+        self.assertNotEqual(component.set_governor(None, 0, 'conservative'), None)
